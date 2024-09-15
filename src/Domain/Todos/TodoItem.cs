@@ -3,39 +3,39 @@ using Domain.Users;
 
 using static Domain.Users.User;
 
-namespace Domain.Tasks;
+namespace Domain.Todos;
 
-public sealed class Task : BaseEntity
+public sealed class TodoItem : BaseEntity
 {
     private List<User> _sharedWith = new List<User>();
 
-    private Task() { } // Used by EF Core
+    private TodoItem() { } // Used by EF Core
 
-    private Task(TaskId id, Name name, UserId ownerId) : base() 
+    private TodoItem(TodoItemId id, Name name, UserId ownerId) : base() 
     {
         Id = id;
         Name = name;
         OwnerId = ownerId;
     }
 
-    public readonly record struct TaskId(Guid Id)
+    public readonly record struct TodoItemId(Guid Value)
     {
-        public static implicit operator Guid(TaskId taskId) => taskId.Id;
-        public static implicit operator TaskId(Guid id) => new TaskId(id);
+        public static implicit operator Guid(TodoItemId taskId) => taskId.Value;
+        public static implicit operator TodoItemId(Guid id) => new TodoItemId(id);
     }
 
-    public TaskId Id { get; } = new TaskId(Guid.Empty);
+    public TodoItemId Id { get; } = new TodoItemId(Guid.Empty);
 
     public Name Name { get; private set; } = null!;
 
     public Priority Priority { get; private set; } = Priority.Todo;
 
-    public UserId OwnerId { get; }
+    public UserId OwnerId { get; private set; }
 
     public IReadOnlyCollection<User> SharedWith => _sharedWith.AsReadOnly();
 
-    private static Task Init(Name name, UserId ownerId) 
-        => new(new TaskId(Guid.NewGuid()), name, ownerId);
+    public static TodoItem Init(Name name, UserId ownerId) 
+        => new(new TodoItemId(Guid.NewGuid()), name, ownerId);
 
     public void Rename(Name name)
     {
@@ -47,11 +47,16 @@ public sealed class Task : BaseEntity
         Priority = priority;
     }
 
+    public void ChangeOwner(UserId ownerId)
+    {
+        OwnerId = ownerId;
+    }
+
     public Result ShareWithUser(User user)
     {
         if(_sharedWith.Any(u => u.Id == user.Id))
         {
-            return Result.Failure(TaskErrors.UserIsAlreadyShareWith);
+            return Result.Failure(error: TodoItemErrors.UserIsAlreadyShareWith);
         }
 
         _sharedWith.Add(user);
@@ -66,7 +71,7 @@ public sealed class Task : BaseEntity
 
         if(user is null)
         {
-            return Result.Failure(TaskErrors.UserIsNotFoundForShareWith);
+            return Result.Failure(TodoItemErrors.UserIsNotFoundForShareWith);
         }
 
         _sharedWith.Remove(user);

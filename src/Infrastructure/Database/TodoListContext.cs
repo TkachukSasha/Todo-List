@@ -1,4 +1,5 @@
-﻿using Domain.Users;
+﻿using Domain.Todos;
+using Domain.Users;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ public sealed class TodoListContext : DbContext
 
     public DbSet<User> Users => Set<User>();
 
-    public DbSet<Domain.Tasks.Task> Tasks => Set<Domain.Tasks.Task>();
+    public DbSet<TodoItem> Todos => Set<TodoItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

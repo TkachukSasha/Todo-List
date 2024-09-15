@@ -1,13 +1,14 @@
 ﻿using Domain.Abstractions;
 using Domain.Abstractions.Queries.Paging;
 using Domain.Abstractions.Queries;
-using Domain.Tasks;
 using Domain.Users;
 
 using Infrastructure.Database.Repositories;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Infrastructure.Database.Initializers;
+using Domain.Todos;
 
 namespace Infrastructure.Database;
 
@@ -29,8 +30,11 @@ public static class DependencyInjection
 
         services.AddDal<TodoListContext>();
 
+        services
+           .AddInitializer<UsersInitializer>();
+
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<ITaskRepository, TaskRepository>();
+        services.AddScoped<ITodoItemRepository, TodoItemRepository>();
 
         return services;
     }
@@ -45,6 +49,9 @@ public static class DependencyInjection
 
         return services;
     }
+
+    private static IServiceCollection AddInitializer<T>(this IServiceCollection services) where T : class, IDataInitializer
+      => services.AddTransient<IDataInitializer, T>();
 
     public static async Task<Paged<TEntity>> PaginateAsync<TEntity>
     (

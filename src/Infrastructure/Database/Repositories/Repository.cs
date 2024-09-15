@@ -59,10 +59,24 @@ public abstract class Repository<TEntity>(TodoListContext todoListContext)
             .Add(entity);
     }
 
+    public void AddRange(IEnumerable<TEntity> entities)
+    {
+        _todoListContext
+            .Set<TEntity>() 
+            .AddRange(entities);
+    }
+
     public void Remove(TEntity entity)
     {
         _todoListContext
             .Set<TEntity>()
             .Remove(entity);
+    }
+
+    public void RemoveRange(IEnumerable<TEntity> entities)
+    {
+        _todoListContext
+            .Set<TEntity>()
+            .RemoveRange(entities);
     }
 }

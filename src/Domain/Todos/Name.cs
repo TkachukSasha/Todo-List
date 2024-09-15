@@ -1,6 +1,6 @@
 ﻿using Domain.Abstractions;
 
-namespace Domain.Tasks;
+namespace Domain.Todos;
 
 public sealed record Name
 {
@@ -15,12 +15,12 @@ public sealed record Name
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return Result.Failure<Name>(TaskErrors.NameMustBeProvide);
+            return Result.Failure<Name>(TodoItemErrors.NameMustBeProvide);
         }
 
         if (value.Length > MAX_LENGTH)
         {
-            return Result.Failure<Name>(TaskErrors.NameIsOutOfRange);
+            return Result.Failure<Name>(TodoItemErrors.NameIsOutOfRange);
         }
 
         return new Name(value);

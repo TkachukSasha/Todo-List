@@ -1,4 +1,4 @@
-﻿namespace Domain.Tasks;
+﻿namespace Domain.Todos;
 
 public enum Priority
 {

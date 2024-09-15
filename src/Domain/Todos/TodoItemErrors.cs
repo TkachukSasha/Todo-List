@@ -1,8 +1,8 @@
 ﻿using Domain.Abstractions;
 
-namespace Domain.Tasks;
+namespace Domain.Todos;
 
-public static class TaskErrors
+public static class TodoItemErrors
 {
     public static readonly Error NameMustBeProvide = Error.Validation($"[{nameof(Task)}]", "Name must be provide!");
 

@@ -1,0 +1,66 @@
+@Api_HostAddress = http://localhost:5000/api
+
+POST {{Api_HostAddress}}/todos/v1
+Content-Type: application/json
+
+{
+  "ownerId" : "8873be91-7e26-4908-8198-36ccba05bda9",
+  "todoLists" : [
+    {
+      "name" : "First",
+      "priority" : 1
+    }
+  ]
+}
+
+###
+POST {{Api_HostAddress}}/todos/v1/shares
+Content-Type: application/json
+
+{
+  "taskId" : "206e4fb4-3dba-461e-8aaf-3cd7578d79ca"
+  "ownerId" : "6619651f-ecd4-4a60-92c9-d7ad778c99b6",
+  "userId" : "206e4fb4-3dba-461e-8aaf-3cd7578d79ca"
+}
+
+###
+PUT {{Api_HostAddress}}/todos/v1
+Content-Type: application/json
+
+{
+  "id" : "206e4fb4-3dba-461e-8aaf-3cd7578d79ca",
+  "ownerId" : "6619651f-ecd4-4a60-92c9-d7ad778c99b6",
+  "name" : "Change to 2",
+  "priority" : "2
+}
+
+###
+GET {{Api_HostAddress}}/todos/v1/single?id=6619651f-ecd4-4a60-92c9-d7ad778c99b6&userId=206e4fb4-3dba-461e-8aaf-3cd7578d79ca
+Accept: application/json
+
+###
+GET {{Api_HostAddress}}/todos/v1?sortColumn=Name&sortOrder=desc&page=1&results=10
+Accept: application/json
+
+###
+GET {{Api_HostAddress}}/todos/v1/shares?taskId=fdsfs&ownerId=6619651f-ecd4-4a60-92c9-d7ad778c99b6&userId=206e4fb4-3dba-461e-8aaf-3cd7578d79ca
+Accept: application/json
+
+###
+DELETE {{Api_HostAddress}}/todos/v1/shares
+Accept: application/json
+
+{
+  "taskId" : "",
+  "ownerId": "",
+  "userId" : ""
+}
+
+###
+DELETE {{Api_HostAddress}}/todos/v1
+Accept: application/json
+
+{
+  "id" : "",
+  "ownerId" : ""
+}

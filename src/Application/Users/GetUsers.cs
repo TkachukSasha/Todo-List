@@ -18,7 +18,6 @@ internal sealed class GetUsersQueryHandler(IUserRepository userRepository) : IQu
     {
         IQueryable<UserDto> users = _userRepository
             .GetAll()
-            .Where(u => !u.IsDeleted)
             .Select(u => new UserDto(u.Id, u.Email.Value));
 
         return await users.PaginateAsync(query, cancellationToken);

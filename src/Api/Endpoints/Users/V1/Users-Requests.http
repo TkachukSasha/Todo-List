@@ -1,0 +1,21 @@
+@Api_HostAddress = http://localhost:5000/api
+
+GET {{Api_HostAddress}}/users/v1?page=1&results=10
+Accept: application/json
+
+  "empty": false,
+  "currentPage": 1,
+  "resultsPerPage": 10,
+  "totalPages": 1,
+  "totalResults": 1,
+  "hasPreviousPage": false,
+  "hasNextPage": false
+}
+
+###
+POST {{Api_HostAddress}}/users/v1
+Content-Type: application/json
+
+{
+  "email" : "tkachukopersonal@gmail.com"
+}

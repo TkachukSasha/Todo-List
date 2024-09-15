@@ -1,5 +1,5 @@
 ﻿using Domain.Abstractions;
-using Domain.Tasks;
+using Domain.Todos;
 
 namespace Unit.Tests.Tasks;
 
@@ -15,7 +15,7 @@ public class NameTests
         Result<Name> name = Name.Init(value);
 
         name.IsFailure.Should().BeTrue();
-        name.Errors.Should().Contain(TaskErrors.NameMustBeProvide);
+        name.Errors.Should().Contain(expected: TodoItemErrors.NameMustBeProvide);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public class NameTests
         Result<Name> name = Name.Init(_name);
 
         name.IsFailure.Should().BeTrue();
-        name.Errors.Should().Contain(TaskErrors.NameIsOutOfRange);
+        name.Errors.Should().Contain(TodoItemErrors.NameIsOutOfRange);
     }
 
     [Theory]

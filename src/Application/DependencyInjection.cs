@@ -22,7 +22,7 @@ public static class DependencyInjection
 
         services.AddDispatchers();
 
-        services.AddDataLayer(configuration.GetConnectionString("Default")!);
+        services.AddDataLayer(configuration.GetConnectionString("Database")!);
 
         return services;
     }
