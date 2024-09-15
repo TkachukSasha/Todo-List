@@ -18,7 +18,11 @@ public sealed class Task : BaseEntity
         OwnerId = ownerId;
     }
 
-    public readonly record struct TaskId(Guid Id);
+    public readonly record struct TaskId(Guid Id)
+    {
+        public static implicit operator Guid(TaskId taskId) => taskId.Id;
+        public static implicit operator TaskId(Guid id) => new TaskId(id);
+    }
 
     public TaskId Id { get; } = new TaskId(Guid.Empty);
 

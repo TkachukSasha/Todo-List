@@ -4,7 +4,11 @@ namespace Domain.Users;
 
 public sealed class User : BaseEntity
 {
-    public readonly record struct UserId(Guid Id);
+    public readonly record struct UserId(Guid Id)
+    {
+        public static implicit operator Guid(UserId userId) => userId.Id;
+        public static implicit operator UserId(Guid id) => new UserId(id);
+    };
 
     private User() { } // Used by EF Core
 
